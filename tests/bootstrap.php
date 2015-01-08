@@ -1,10 +1,20 @@
 <?php
 
-$main_path = realpath(dirname(__FILE__)) . '/..';
+define('PBP_CORE_PREFIX', 'pbpCore');
+define('PBP_PLUGIN_BASE_PATH', __DIR__ . '/..');
 
-ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . 
-        $main_path);
 
-//require_once ($main_path . '/Entity.php');
-// put your code here
+require_once (PBP_PLUGIN_BASE_PATH . '/../../../index.php');
+
+
+spl_autoload_register(function ($class) {
+
+    // Only autoload plugin functions
+   if (substr($class, 0, strlen(PBP_CORE_PREFIX)) === PBP_CORE_PREFIX) 
+                {
+        $class = str_replace('\\', '/', $class);
+
+        include PBP_PLUGIN_BASE_PATH . '/' . $class . '.php';
+    }
+});
 ?>
