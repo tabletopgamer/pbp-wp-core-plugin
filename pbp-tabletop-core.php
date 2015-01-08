@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Plugin Name: PbP Tabletop Core
- * Plugin URI: http://
+ * Plugin Name: PlayByPost Games
+ * Plugin URI: https://github.com/tabletopgamer/pbp-wp-core-plugin
  * Description: A custom plugin that allows you to create your own play by post
  * games. It is also the core needed for all other PbP plugins
  * Version: 1.0
  * Author: tabletopgamer
- * Author URI: 
+ * Author URI: https://github.com/tabletopgamer
  * */
 
 class PbpTabletopCore {
@@ -26,16 +26,19 @@ class PbpTabletopCore {
         $this->file = __FILE__;
         $this->basename = plugin_basename($this->file);
 
-        $this->includes_path = trailingslashit(plugin_dir_path($this->file) . 'includes');
-        $this->includes_url = trailingslashit(plugin_dir_url($this->file) . 'includes');
+        $this->plugin_dir = plugin_dir_path($this->file);
+        $this->plugin_url = plugin_dir_url($this->file);
         
         $this->include_classes();
     }
 
     private function include_classes() {
         $files_to_include = array(
-           'PbpCardShortcode.php',
-           'PbpGameCustomPost.php',
+            // cards plugin
+           'cards/PbpCardShortcode.php',
+            
+            // post plugin
+           'game-post/PbpGameCustomPost.php',
         );
         
         foreach($files_to_include as $file_relative_path){

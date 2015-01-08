@@ -12,10 +12,10 @@ class PbpCardShortcode {
     }
 
     static function register_script() {
-        wp_register_script('my-script', plugins_url('/../js/cards.js', __FILE__), array('jquery'), '1.0', true);
+        wp_register_script('my-script', plugins_url('/../cards/js/cards.js', __FILE__), array('jquery'), '1.0', true);
         wp_enqueue_script('my-script');
         
-        wp_register_style('my-style', plugins_url('/../css/cards.css', __FILE__));
+        wp_register_style('my-style', plugins_url('/../cards/css/cards.css', __FILE__));
         wp_enqueue_style('my-style');
     }
     
