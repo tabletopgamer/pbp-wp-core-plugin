@@ -42,7 +42,7 @@ class PbpTabletopCore {
         );
         
         foreach($files_to_include as $file_relative_path){
-            require($this->includes_path . $file_relative_path);
+            require($this->plugin_dir . $file_relative_path);
         }
     }
 }
