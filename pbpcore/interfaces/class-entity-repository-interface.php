@@ -4,20 +4,20 @@
  *
  * @author tabletopgamer
  */
-namespace pbpCore\interfaces;
+namespace pbpcore\interfaces;
 
-interface IEntityRepository {
+interface Entity_Repository_Interface {
     
     /**
      * @param $entityId The unique identifier of the entity
-     * @return IEntity The IEntityObject. 
+     * @return Entity_Interface The IEntityObject. 
      */
-    function getEntityById($entityId);
+    function getEntityById( $entityId );
     
     /**
      * @param array $entityIds An one dimesnional array containing a list of ids.
      * @return IEnity[] An array of entities. Empty array is returned in case none is found
      */
-    function getEntitiesById(array $entityIds);
+    function getEntitiesById( array $entityIds );
     
 }

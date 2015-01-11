@@ -1,14 +1,13 @@
 <?php
+namespace pbpcore\implementations;
+use pbpcore\interfaces\Entity_Interface;
+
 /**
  * @package core
  * 
  * Adapter class for WP_Post entity class
  */
-
-namespace pbpCore\implementations;
-use pbpCore\interfaces\IEntity;
-
-class WpPostEntityAdapter implements IEntity{
+class WP_Post_Entity_Adapter implements Entity_Interface{
     
     private $id;
     private $title;
@@ -17,12 +16,12 @@ class WpPostEntityAdapter implements IEntity{
     /**
      * @param \WP_Post $wpPost
      */
-    public function __construct(\WP_Post $wpPost) {
-        if ($wpPost == NULL || !is_a($wpPost, "WP_Post")) {
-            throw new InvalidArgumentException("'wpPost' must be a valid WP_Post" );
+    public function __construct( \WP_Post $wpPost ) {
+        if ($wpPost == NULL || !is_a($wpPost, 'WP_Post')) {
+            throw new InvalidArgumentException( 'wpPost must be a valid WP_Post' );
         }
 
-        if ($wpPost != NULL) {
+        if ( $wpPost != NULL ) {
             $this->id = $wpPost->ID;
             $this->title = $wpPost->post_title;
             $this->contents = $wpPost->post_content;
@@ -30,15 +29,15 @@ class WpPostEntityAdapter implements IEntity{
     }
     
     
-    public function getId() {
+    public function get_id() {
         return $this->id;
     }
     
-    public function getTitle() {
+    public function get_title() {
         return $this->title;
     }
 
-    public function getContents() {
+    public function get_contents() {
         return $this->contents;
     }
 }
