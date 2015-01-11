@@ -1,10 +1,11 @@
 <?php
+namespace PbP_Core\Interfaces;
+
 /**
  * A interface describing a generic entity used in the plugins
  *
  * @author tabletopgamer
  */
-namespace pbpcore\interfaces;
 
 interface Entity_Interface {
     function get_id();

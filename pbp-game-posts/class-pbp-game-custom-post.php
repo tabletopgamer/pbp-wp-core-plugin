@@ -1,4 +1,7 @@
 <?php
+namespace PbP_Game_Posts;
+
+use PbP_Core\Interfaces\PbP_Custom_Post;
 
 class PbP_Game_Custom_Post extends PbP_Custom_Post {
 

@@ -1,4 +1,5 @@
 <?php
+namespace PbP_Cards;
 
 class PbP_Card_Shortcode {
 

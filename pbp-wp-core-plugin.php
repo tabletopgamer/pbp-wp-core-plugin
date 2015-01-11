@@ -29,34 +29,50 @@ class PbP_Tabletop_Core {
         $this->plugin_dir = plugin_dir_path( $this->file );
         $this->plugin_url = plugin_dir_url( $this->file );
         
-        $this->include_classes();
+       // $this->include_classes();
     }
 
-    private function include_classes() {
-        $files_to_include = array(
-            // cards plugin
-        //   'cards/PbpCardShortcode.php',
-            
-            // post plugin
-		   'game-post/class-pbp-custom-post.php',
-           'game-post/class-pbp-game-custom-post.php',
-           'game-post/class-pbp-card-custom-post.php',
-        );
-        
-        foreach( $files_to_include as $file_relative_path) {
-            require( $this->plugin_dir . $file_relative_path );
-        }
-    }
 }
 
 
-//PbpCardShortcode::init();
+
+define( 'PBP_CORE_PREFIX', 'PbP_' );
+define( 'PBP_PLUGIN_BASE_PATH', plugin_dir_path( __FILE__ ) );
+
+
+spl_autoload_register( function ( $path_to_include ) {
+		
+	// Only autoload plugin functions
+    if ( substr( $path_to_include, 0, strlen( PBP_CORE_PREFIX ) ) === PBP_CORE_PREFIX ) {
+		
+		$path_to_include = strtolower( strtr( $path_to_include, array( '\\' => '/', '_' => '-') ) );
+	
+		$class_name = basename( $path_to_include );
+		
+		$path_to_include = str_replace($class_name, 'class-' . $class_name, $path_to_include);
+		
+		$path_to_include  = PBP_PLUGIN_BASE_PATH . $path_to_include . '.php';
+		
+		if (  !file_exists( $path_to_include ))
+			return false;
+		
+		require_once $path_to_include; 
+
+		return true;
+    }
+} );
+
+
+
+
 
 $pbpCore = PbP_Tabletop_Core::instance();
 
-$pbpGamePost = new PbP_Game_Custom_Post();
-$pbpGardPost = new PbP_Card_Custom_Post();
+$pbpGamePost = new PbP_Game_Posts\PbP_Game_Custom_Post();
+$pbpGardPost = new PbP_Game_Posts\PbP_Card_Custom_Post();
 
 
 $pbpGamePost->init();
 $pbpGardPost->init();
+
+

@@ -1,6 +1,7 @@
 <?php
-namespace pbpcore\implementations;
-use pbpcore\interfaces\Entity_Interface;
+namespace PbP_Core\Implementations;
+
+use PbP_Core\Interfaces\Entity_Interface;
 
 /**
  * @package core

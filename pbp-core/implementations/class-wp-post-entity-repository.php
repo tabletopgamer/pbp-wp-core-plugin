@@ -1,7 +1,7 @@
 <?php 
-namespace pbpcore\implementations;
+namespace PbP_Core\Implementations;
 
-use pbpcore\interfaces\Entity_Repository_Interface;
+use PbP_Core\Interfaces\Entity_Repository_Interface;
 
 
 /**

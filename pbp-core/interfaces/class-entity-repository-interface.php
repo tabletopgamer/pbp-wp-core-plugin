@@ -1,10 +1,11 @@
 <?php
+namespace PbP_Core\Interfaces;
+
 /**
  * Interface describing behavior for a generig Entity Repository
  *
  * @author tabletopgamer
  */
-namespace pbpcore\interfaces;
 
 interface Entity_Repository_Interface {
     

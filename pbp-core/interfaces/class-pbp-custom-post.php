@@ -1,4 +1,5 @@
 <?php
+namespace PbP_Core\Interfaces;
 
 /**
  * Description of PbpCustomPostRegister
