@@ -1,5 +1,8 @@
 <?php
 
+use PbP_Core\Implementations\PBP_POST_TYPES;
+use PbP_Core\Implementations\PbP_WP_Custom_Post_Register;
+
 /**
  * Plugin Name: PlayByPost Games
  * Plugin URI: https://github.com/tabletopgamer/pbp-wp-core-plugin
@@ -29,7 +32,14 @@ class PbP_Tabletop_Core {
         $this->plugin_dir = plugin_dir_path( $this->file );
         $this->plugin_url = plugin_dir_url( $this->file );
         
-       // $this->include_classes();
+		PBP_POST_TYPES::initialize();
+       
+		$postRegister = new PbP_WP_Custom_Post_Register();
+		$postRegister->add_custom_post(PBP_POST_TYPES::$CARD);
+		$postRegister->add_custom_post(PBP_POST_TYPES::$GAME);
+		$postRegister->add_custom_post(PBP_POST_TYPES::$CHARACTER);
+
+		$postRegister->register_all();
     }
 
 }
@@ -44,7 +54,7 @@ spl_autoload_register( function ( $path_to_include ) {
 		
 	// Only autoload plugin functions
     if ( substr( $path_to_include, 0, strlen( PBP_CORE_PREFIX ) ) === PBP_CORE_PREFIX ) {
-		
+		echo "\nTryToInclude : " . $path_to_include;
 		$path_to_include = strtolower( strtr( $path_to_include, array( '\\' => '/', '_' => '-') ) );
 	
 		$class_name = basename( $path_to_include );
@@ -68,11 +78,6 @@ spl_autoload_register( function ( $path_to_include ) {
 
 $pbpCore = PbP_Tabletop_Core::instance();
 
-$pbpGamePost = new PbP_Game_Posts\PbP_Game_Custom_Post();
-$pbpGardPost = new PbP_Game_Posts\PbP_Card_Custom_Post();
 
-
-$pbpGamePost->init();
-$pbpGardPost->init();
 
 

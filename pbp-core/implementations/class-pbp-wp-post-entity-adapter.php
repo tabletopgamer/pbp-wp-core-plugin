@@ -8,7 +8,7 @@ use PbP_Core\Interfaces\Entity_Interface;
  * 
  * Adapter class for WP_Post entity class
  */
-class WP_Post_Entity_Adapter implements Entity_Interface{
+class PbP_WP_Post_Entity_Adapter implements Entity_Interface{
     
     private $id;
     private $title;

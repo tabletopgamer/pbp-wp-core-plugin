@@ -10,7 +10,7 @@ use PbP_Core\Interfaces\Entity_Repository_Interface;
  * Wordpress specific implementation for an IEntityRepository
  * @see Entity_Repository_Interface
  */
-class WP_Post_Entity_Repository implements Entity_Repository_Interface{
+class PbP_WP_Post_Entity_Repository implements Entity_Repository_Interface{
     
     /**
      * @param array[int] $entityIds
@@ -27,7 +27,7 @@ class WP_Post_Entity_Repository implements Entity_Repository_Interface{
         
         if ( count( $wpPosts ) > 0 ){
             foreach ( $wpPosts as $wpPost ){
-                $entities[] = new WP_Post_Entity_Adapter( $wpPost) ;
+                $entities[] = new PbP_WP_Post_Entity_Adapter( $wpPost) ;
                
             }
         }
@@ -44,7 +44,7 @@ class WP_Post_Entity_Repository implements Entity_Repository_Interface{
         $wpPost = \get_post( $entityId );
         
         if ( $wpPost !== NULL ){
-            $result = new WP_Post_Entity_Adapter( $wpPost );
+            $result = new PbP_WP_Post_Entity_Adapter( $wpPost );
         }
         
         return $result;
