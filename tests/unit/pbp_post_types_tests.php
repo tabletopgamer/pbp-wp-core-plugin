@@ -1,11 +1,13 @@
 <?php
 
 use PbP_Core\Implementations\PBP_POST_TYPES;
+
 /**
  * Description of pbp-entity-types-tests
  *
  * @author tabletopgamer
  */
+
 class PbP_Post_Types_Tests extends PHPUnit_Framework_TestCase {
 
 	public function setUp(){

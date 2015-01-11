@@ -26,15 +26,15 @@ class PBP_POST_TYPES {
 	private static $all_types;
 	
 	public static function initialize(){
-		self::$UNKNOWN		= new PbP_Post_Type('undefined','','');
-		self::$CARD			= new PbP_Post_Type('tabletop_card','PbP Card','PbP Cards');
-		self::$GAME			= new PbP_Post_Type('tabletop_game','PbP Game','PbP Games');
-		self::$CHARACTER	= new PbP_Post_Type('tabletop_character','PbP Character','PbP Characters');
+		self::$UNKNOWN   = new PbP_Post_Type('undefined','','');
+		self::$CARD      = new PbP_Post_Type('tabletop_card','PbP Card','PbP Cards');
+		self::$GAME      = new PbP_Post_Type('tabletop_game','PbP Game','PbP Games');
+		self::$CHARACTER = new PbP_Post_Type('tabletop_character','PbP Character','PbP Characters');
 		
 		self::$all_types = array(
-			self::$CARD->get_post_type() 		=> self::$CARD,
-			self::$GAME->get_post_type()		=> self::$GAME,
-			self::$CHARACTER->get_post_type()	=> self::$CHARACTER,
+			self::$CARD->get_post_type()      => self::$CARD,
+			self::$GAME->get_post_type()      => self::$GAME,
+			self::$CHARACTER->get_post_type() => self::$CHARACTER,
 		);
 		
 	}
