@@ -1,14 +1,18 @@
 <phpunit
 	bootstrap="unit/bootstrap.php"
-	backupGlobals="false"
 	colors="true"
 	convertErrorsToExceptions="true"
 	convertNoticesToExceptions="true"
 	convertWarningsToExceptions="true"
 	>
 	<testsuites>
+<<<<<<< HEAD
 		<testsuite name="unit tests">
 			<directory suffix="Tests.php">./unit</directory>
+=======
+                <testsuite name="unit tests">
+			<directory suffix="test.php">./unit</directory>
+>>>>>>> 1811156... unit test mingling
 		</testsuite>
 	</testsuites>
 </phpunit>
