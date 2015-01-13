@@ -1,16 +1,32 @@
 <?php
 
-$_tests_dir = getenv( 'WP_TESTS_DIR' );
-if ( !$_tests_dir )
-    $_tests_dir = '/tmp/wordpress-tests-lib';
 
-require_once $_tests_dir . '/includes/functions.php';
+define( 'PBP_CORE_PREFIX', 'PbP_' );
+define( 'PBP_PLUGIN_BASE_PATH', realpath(dirname( __FILE__ ) . '/../..'));
 
-function _manually_load_plugin(  ) {
-    require dirname( __FILE__ ) . '/../../pbp-wp-core-plugin.php';
-}
 
-tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
-print_r( "error: " . $_tests_dir );
+spl_autoload_register( function ( $path_to_include ) {
 
-require $_tests_dir . '/includes/bootstrap.php';
+	// Only autoload plugin functions
+    if ( substr( $path_to_include, 0, strlen( PBP_CORE_PREFIX ) ) === PBP_CORE_PREFIX ) {
+		
+		$path_to_include = strtolower( strtr( $path_to_include, array( '\\' => '/', '_' => '-') ) );
+	
+		$class_name = basename( $path_to_include );
+		
+		$path_to_include = str_replace($class_name, 'class-' . $class_name, $path_to_include);
+		
+		$path_to_include  = PBP_PLUGIN_BASE_PATH . '/' . $path_to_include . '.php';
+		
+		if (  !file_exists( $path_to_include )) {
+			print_r( "Can't include file: $path_to_include ");
+			return false;
+		}
+		
+		require_once $path_to_include; 
+
+		return true;
+    }
+} );
+
+

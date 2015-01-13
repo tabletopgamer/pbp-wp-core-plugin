@@ -6,7 +6,6 @@ namespace PbP_Core\Interfaces;
  *
  * @author tabletopgamer
  */
-
 interface Entity_Repository_Interface {
     
     /**

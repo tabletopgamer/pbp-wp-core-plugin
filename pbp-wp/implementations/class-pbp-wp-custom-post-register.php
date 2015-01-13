@@ -1,9 +1,9 @@
 <?php
-namespace PbP_Core\Implementations;
+namespace PbP_WP\Implementations;
 
 /**
  * Description of PbpCustomPostRegister
- *
+ * @package wordpress-specific
  * @author tabletopgamer
  */
 class PbP_WP_Custom_Post_Register {

@@ -1,11 +1,11 @@
 <?php 
-namespace PbP_Core\Implementations;
+namespace PbP_WP\Implementations;
 
 use PbP_Core\Interfaces\Entity_Repository_Interface;
 
 
 /**
- * @package core
+ * @package wordpress-specific
  *  
  * Wordpress specific implementation for an IEntityRepository
  * @see Entity_Repository_Interface

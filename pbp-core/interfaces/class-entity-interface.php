@@ -6,9 +6,7 @@ namespace PbP_Core\Interfaces;
  *
  * @author tabletopgamer
  */
-
 interface Entity_Interface {
     function get_id();
-    function get_title();
-    function get_contents();
+    function get_type();
 }

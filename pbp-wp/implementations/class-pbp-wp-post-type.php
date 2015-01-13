@@ -1,9 +1,9 @@
 <?php
-namespace PbP_Core\Implementations;
+namespace PbP_WP\Implementations;
 
-use PbP_Core\Interfaces\Custom_Post_Type_Interface;
+use PbP_WP\Interfaces\PbP_WP_Post_Type_Interface;
 
-class PbP_Post_Type implements Custom_Post_Type_Interface {
+class PbP_WP_Post_Type implements PbP_WP_Post_Type_Interface {
 	
 	private $post_type;
 	private $single_name;

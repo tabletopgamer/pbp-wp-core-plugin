@@ -1,24 +1,26 @@
 <?php
-namespace PbP_Core\Implementations;
+namespace PbP_WP\Implementations;
 
-class PBP_POST_TYPES {
+use PbP_Core\Interfaces\Entity_Types;
+
+class PBP_WP_POST_TYPES {
 	/**
-	 * @var PbP_Post_Type 
+	 * @var PbP_WP_Post_Type 
 	 */
 	public static $CARD;
 	
 	/**
-	 * @var PbP_Post_Type 
+	 * @var PbP_WP_Post_Type 
 	 */
 	public static $GAME;
 	
 	/**
-	 * @var PbP_Post_Type 
+	 * @var PbP_WP_Post_Type 
 	 */
 	public static $CHARACTER;
 	
 	/**
-	 * @var PbP_Post_Type 
+	 * @var PbP_WP_Post_Type 
 	 */
 	public static $UNKNOWN;
 	
@@ -26,10 +28,10 @@ class PBP_POST_TYPES {
 	private static $all_types;
 	
 	public static function initialize(){
-		self::$UNKNOWN   = new PbP_Post_Type('undefined','','');
-		self::$CARD      = new PbP_Post_Type('tabletop_card','PbP Card','PbP Cards');
-		self::$GAME      = new PbP_Post_Type('tabletop_game','PbP Game','PbP Games');
-		self::$CHARACTER = new PbP_Post_Type('tabletop_character','PbP Character','PbP Characters');
+		self::$UNKNOWN   = new PbP_WP_Post_Type( Entity_Types::UNKNOWN,'','');
+		self::$CARD      = new PbP_WP_Post_Type( Entity_Types::CARD,'PbP Card','PbP Cards');
+		self::$GAME      = new PbP_WP_Post_Type( Entity_Types::GAME,'PbP Game','PbP Games');
+		self::$CHARACTER = new PbP_WP_Post_Type( Entity_Types::CHARACTER ,'PbP Character','PbP Characters');
 		
 		self::$all_types = array(
 			self::$CARD->get_post_type()      => self::$CARD,

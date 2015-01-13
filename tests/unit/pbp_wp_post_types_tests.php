@@ -1,6 +1,6 @@
 <?php
 
-use PbP_Core\Implementations\PBP_POST_TYPES;
+use PbP_WP\Implementations\PBP_WP_POST_TYPES;
 
 /**
  * Description of pbp-entity-types-tests
@@ -8,7 +8,7 @@ use PbP_Core\Implementations\PBP_POST_TYPES;
  * @author tabletopgamer
  */
 
-class PbP_Post_Types_Tests extends PHPUnit_Framework_TestCase {
+class PbP_WP_Post_Types_Tests extends PHPUnit_Framework_TestCase {
 
 	public function setUp(){
 	}
@@ -17,13 +17,13 @@ class PbP_Post_Types_Tests extends PHPUnit_Framework_TestCase {
 	 * @covers PBP_POST_TYPES::get_type
 	 */
     public function testGetType_WithExistingType_ReturnsCorrectPostType() {
-		PBP_POST_TYPES::initialize();
+		PBP_WP_POST_TYPES::initialize();
 		$existingType = "tabletop_card";
 		
-		$result = PBP_POST_TYPES::get_type($existingType);
+		$result = PBP_WP_POST_TYPES::get_type($existingType);
         
 		
-		$this->assertEquals( PBP_POST_TYPES::$CARD, $result );
+		$this->assertEquals( PBP_WP_POST_TYPES::$CARD, $result );
     }
 	
 	/**
@@ -31,12 +31,12 @@ class PbP_Post_Types_Tests extends PHPUnit_Framework_TestCase {
 	 */
 	public function testGetType_WithInExistingType_ReturnsUnknownType() {
 		
-		PBP_POST_TYPES::initialize();
+		PBP_WP_POST_TYPES::initialize();
 		$existingType = "this does not exist";
 		
-		$result = PBP_POST_TYPES::get_type($existingType);
+		$result = PBP_WP_POST_TYPES::get_type($existingType);
         
-		$this->assertEquals( PBP_POST_TYPES::$UNKNOWN, $result );
+		$this->assertEquals( PBP_WP_POST_TYPES::$UNKNOWN, $result );
     }
 	
 	
@@ -49,11 +49,11 @@ class PbP_Post_Types_Tests extends PHPUnit_Framework_TestCase {
 		
 		$existingType = "tabletop_card";
 				
-		PBP_POST_TYPES::get_type($existingType);
+		PBP_WP_POST_TYPES::get_type($existingType);
     }
 	
 	public function tearDown()
     {
-        PBP_POST_TYPES::deinitialize();
+        PBP_WP_POST_TYPES::deinitialize();
     }
 }
