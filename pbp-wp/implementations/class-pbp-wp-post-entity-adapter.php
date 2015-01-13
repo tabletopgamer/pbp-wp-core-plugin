@@ -1,6 +1,7 @@
 <?php
 namespace PbP_WP\Implementations;
 
+use PbP_Core\Interfaces\Entity_Type;
 use PbP_Core\Interfaces\Entity_Interface;
 
 /**
@@ -10,7 +11,14 @@ use PbP_Core\Interfaces\Entity_Interface;
  */
 class PbP_WP_Post_Entity_Adapter implements Entity_Interface{
     
+	/**
+	 * @var int
+	 */
     private $id;
+	
+	/**
+	 * @var Entity_Type
+	 */
 	private $type;
 	
     private $title;
@@ -28,15 +36,20 @@ class PbP_WP_Post_Entity_Adapter implements Entity_Interface{
             $this->id = $wpPost->ID;
             $this->title = $wpPost->post_title;
             $this->contents = $wpPost->post_content;
-			$this->type = PBP_WP_POST_TYPES::get_type($wpPost->post_type);
+			$this->type = new Entity_Type($wpPost->post_type);
         }
     }
     
-    
+    /**
+     * @return int
+     */
     public function get_id() {
         return $this->id;
     }
 	
+	/**
+     * @return Entity_Type
+     */
 	public function get_type() {
 		return $this->type;
 	}

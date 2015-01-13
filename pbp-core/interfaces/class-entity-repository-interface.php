@@ -1,5 +1,4 @@
-<?php
-namespace PbP_Core\Interfaces;
+<?php namespace PbP_Core\Interfaces;
 
 /**
  * Interface describing behavior for a generig Entity Repository
@@ -9,7 +8,7 @@ namespace PbP_Core\Interfaces;
 interface Entity_Repository_Interface {
     
     /**
-     * @param $entityId The unique identifier of the entity
+     * @param int The unique identifier of the entity
      * @return Entity_Interface The IEntityObject. 
      */
     function getEntityById( $entityId );

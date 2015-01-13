@@ -11,5 +11,5 @@ function _manually_load_plugin(  ) {
 }
 
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
-print_r( "error: " . $_tests_dir );
+
 require $_tests_dir . '/includes/bootstrap.php';

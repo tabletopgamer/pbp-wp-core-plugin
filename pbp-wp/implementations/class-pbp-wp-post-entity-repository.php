@@ -40,6 +40,11 @@ class PbP_WP_Post_Entity_Repository implements Entity_Repository_Interface{
      * @return Entity_Interface The IEntity, if there is an entity with entity_id exists, NULL otherwise
      */
     public function getEntityById( $entityId ) {
+		
+		if (!is_numeric( $entityId )){
+			throw new \InvalidArgumentException("entityId must be null");
+		}
+		
         $result = NULL;
         $wpPost = \get_post( $entityId );
         

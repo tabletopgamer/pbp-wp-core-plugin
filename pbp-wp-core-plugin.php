@@ -1,7 +1,7 @@
 <?php
 
-use PbP_Core\Implementations\PBP_WP_POST_TYPES;
-use PbP_Core\Implementations\PbP_WP_Custom_Post_Register;
+use PbP_WP\Implementations\PbP_WP_Post_Type_Provider;
+use PbP_WP\Implementations\PbP_WP_Custom_Post_Register;
 
 /**
  * Plugin Name: PlayByPost Games
@@ -28,19 +28,17 @@ class PbP_Tabletop_Core {
     private function __construct() {
         $this->file = __FILE__;
         
-		PBP_WP_POST_TYPES::initialize();
-       
+		$typeProvider = new PbP_WP_Post_Type_Provider();
 		$postRegister = new PbP_WP_Custom_Post_Register();
-		$postRegister->add_custom_post(PBP_WP_POST_TYPES::$CARD);
-		$postRegister->add_custom_post(PBP_WP_POST_TYPES::$GAME);
-		$postRegister->add_custom_post(PBP_WP_POST_TYPES::$CHARACTER);
+		
+		foreach ($typeProvider->get_available_types() as $availablePostType){
+			$postRegister->add_custom_post($availablePostType);
+		}
 
 		$postRegister->register_all();
     }
 
 }
-
-
 
 define( 'PBP_CORE_PREFIX', 'PbP_' );
 define( 'PBP_PLUGIN_BASE_PATH', dirname( __FILE__ ) );
@@ -67,8 +65,6 @@ spl_autoload_register( function ( $path_to_include ) {
 		return true;
     }
 } );
-
-
 
 
 

@@ -1,5 +1,4 @@
-<?php
-namespace PbP_Core\Interfaces;
+<?php namespace PbP_Core\Interfaces;
 
 /**
  * A interface describing a generic entity used in the plugins
@@ -7,6 +6,14 @@ namespace PbP_Core\Interfaces;
  * @author tabletopgamer
  */
 interface Entity_Interface {
+	
+	/**
+	 * @return int
+	 */
     function get_id();
-    function get_type();
+	
+	/**
+	 * @return Entity_Type
+	 */
+    function  get_type();
 }
