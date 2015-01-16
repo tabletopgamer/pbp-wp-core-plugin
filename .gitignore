@@ -1,3 +1,2 @@
 bin/
-tests/integration/.*
-tests/unit/.*
+.idea
