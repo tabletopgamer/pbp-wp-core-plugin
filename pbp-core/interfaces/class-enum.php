@@ -97,7 +97,6 @@ abstract class Enum {
 		return (string) $this->get_value();
 	}
 
-
 	/**
 	 * Resets the Enum Instance Cache.
 	 * Should never be called, except maybe unit tests!

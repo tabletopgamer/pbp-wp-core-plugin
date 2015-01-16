@@ -5,11 +5,11 @@
  * Time: 05:34
  */
 
-namespace tests\unit;
-
 use PbP_Core\Interfaces\Enum;
 
-
+/**
+ * @coversDefaultClass PbP_Core\Interfaces\Enum
+ */
 class EnumTests extends \PHPUnit_Framework_TestCase {
 
 	/**
@@ -22,14 +22,14 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 		EnumA::set_PROP_01( null );
 		EnumA::set_PROP_02( null );
 		EnumA::set_PROP_03( null );
-		EnumA::tearDown();
+		EnumA::reset_instance_cache();
 
 		EnumB::set_PROP_01( null );
-		EnumB::tearDown();
+		EnumB::reset_instance_cache();
 	}
 
 	/**
-	 * @covers Enum
+	 * @covers ::get_value
 	 */
 	public function test_Enum_CreatedThroughStaticMethod_SetsCorrectValueForThatInstance() {
 		EnumA::set_PROP_01( "iron-man" );
@@ -39,7 +39,9 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( "iron-man", $result );
 	}
 
-
+	/**
+	 * @covers ::__toString
+	 */
 	public function test_Enum_WhenConvertedToString_ReturnsThatInstanceValue() {
 		EnumA::set_PROP_01( "life-42" );
 
@@ -48,6 +50,9 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( "life-42", (string) $sut );
 	}
 
+	/**
+	 * @covers ::__callStatic
+	 */
 	public function test_Enum_CreatedThroughStaticMethod_WithUnDefinedPropertyName_ThrowsException() {
 
 		$this->setExpectedException( 'InvalidArgumentException', 'No enum defined for' );
@@ -55,7 +60,9 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 		EnumA::PROP_XXX();
 	}
 
-
+	/**
+	 * @covers ::__callStatic
+	 */
 	public function test_EqualityComparatorsOnSameEnum_AndSameProperty_ReturnTrue() {
 		EnumA::set_PROP_01( 'the-same' );
 
@@ -63,6 +70,9 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( EnumA::PROP_01(), EnumA::PROP_01() );
 	}
 
+	/**
+	 * @covers ::__callStatic
+	 */
 	public function test_EqualityComparatorsOnSameEnum_AndDifferentProperties_ReturnFalse() {
 		EnumA::set_PROP_01( 'primary' );
 		EnumA::set_PROP_02( 'secondary' );
@@ -71,6 +81,9 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 		$this->assertNotEquals( EnumA::PROP_01(), EnumA::PROP_02() );
 	}
 
+	/**
+	 * @covers ::__callStatic
+	 */
 	public function test_TwoEnums_WithSamePropertyName_ButDifferentValue_AreNotEqual() {
 		EnumA::set_PROP_01( 'aquatic' );
 		EnumB::set_PROP_01( 'circus' );
@@ -78,6 +91,9 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue( EnumA::PROP_01() != EnumB::PROP_01() );
 	}
 
+	/**
+	 * @covers ::__callStatic
+	 */
 	public function test_TwoEnums_WithSamePropertyName_AndSameValue_AreNotEqual() {
 		EnumA::set_PROP_01( 'green' );
 		EnumB::set_PROP_01( 'green' );
@@ -85,6 +101,9 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue( EnumA::PROP_01() != EnumB::PROP_01() );
 	}
 
+	/**
+	 * @covers ::__callStatic
+	 */
 	public function test_TwoEnums_WithDifferentPropertyName_AndSameValue_AreNotEqual() {
 		EnumA::set_PROP_02( 'brown' );
 		EnumB::set_PROP_01( 'brown' );
@@ -92,12 +111,18 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue( EnumA::PROP_02() != EnumB::PROP_01() );
 	}
 
+	/**
+	 * @covers ::get_value
+	 */
 	public function test_Enum_WithPropertyWithoutValue_SetsThePropertyNameAsValue() {
 		$result = EnumB::PROP_WITHOUT_VALUE();
 
 		$this->assertEquals( "PROP_WITHOUT_VALUE", $result->get_value() );
 	}
 
+	/**
+	 * @covers ::get_from_value
+	 */
 	public function test_GetFromValue_CalledWithExistingPropertyWithValue_ReturnsCorrectEnumInstance() {
 
 		$value = "hey-joe";
@@ -108,7 +133,9 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( EnumA::PROP_01(), $result );
 	}
 
-
+	/**
+	 * @covers ::get_from_value
+	 */
 	public function test_GetFromValue_CalledWithExistingPropertyWithoutValue_ReturnsCorrectEnumInstance() {
 
 		$result = EnumB::get_from_value('PROP_WITHOUT_VALUE');
@@ -116,12 +143,47 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( EnumB::PROP_WITHOUT_VALUE(), $result );
 	}
 
+	/**
+	 * @covers ::get_from_value
+	 */
 	public function test_GetFromValue_FallbackToPropertyName_IfNoPropertyWithThatValueExists() {
 		EnumA::set_PROP_01("my_value");
 
 		$result = EnumA::get_from_value("PROP_01");
 
 		$this->assertEquals( EnumA::PROP_01(), $result );
+	}
+
+	/**
+	 * @covers ::__construct
+	 * @covers ::get_enum_instance_and_cache_it
+	 */
+	public function test_ConsecutiveSettingOfSameProperty_DoesNotUpdateValues(){
+		EnumA::set_PROP_01("value 1");
+		$resultFromFirstCall = EnumA::PROP_01();
+
+		EnumA::set_PROP_01("value 2");
+		$resultFromSecondCall = EnumA::PROP_01();
+
+		$this->assertEquals("value 1", $resultFromFirstCall);
+		$this->assertEquals("value 1", $resultFromSecondCall);
+
+	}
+	/**
+	 * @covers ::reset_instance_cache
+	 */
+	public function test_resetInstanceCache_ClearsInstanceCache(){
+		EnumA::set_PROP_01("value 1");
+		$resultFromFirstCall = EnumA::PROP_01();
+
+		EnumA::reset_instance_cache();
+
+		EnumA::set_PROP_01("value 2");
+		$resultFromSecondCall = EnumA::PROP_01();
+
+		$this->assertEquals("value 1", $resultFromFirstCall);
+		$this->assertEquals("value 2", $resultFromSecondCall);
+
 	}
 }
 
@@ -159,7 +221,7 @@ class EnumA extends Enum {
 		self::$PROP_03 = $PROP_03;
 	}
 
-	public static function tearDown() {
+	public static function reset_instance_cache() {
 		parent::reset_instance_cache();
 	}
 
@@ -182,7 +244,7 @@ class EnumB extends Enum {
 		self::$PROP_01 = $PROP_01;
 	}
 
-	public static function tearDown() {
+	public static function reset_instance_cache() {
 		parent::reset_instance_cache();
 	}
 }

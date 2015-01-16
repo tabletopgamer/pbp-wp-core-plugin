@@ -36,7 +36,7 @@ class Custom_Post_Entity_Adapter implements IEntity{
             $this->id = $wpPost->ID;
             $this->title = $wpPost->post_title;
             $this->contents = $wpPost->post_content;
-			$this->type = new Entity_Type($wpPost->post_type);
+			$this->type = Entity_Type::get_from_value($wpPost->post_type);
         }
     }
     

@@ -10,25 +10,26 @@ class Custom_Post_Type_Factory {
 	function __construct() {
 
 		$this->available_types = array(
-			Entity_Type::CARD      => new Custom_Post_Type( Entity_Type::CARD, 'PbP Card', 'PbP Cards' ),
-			Entity_Type::GAME      => new Custom_Post_Type( Entity_Type::GAME, 'PbP Game', 'PbP Games' ),
-			Entity_Type::CHARACTER => new Custom_Post_Type( Entity_Type::CHARACTER, 'PbP Character', 'PbP Characters' ),
+			Entity_Type::CARD()->get_value() => new Custom_Post_Type( Entity_Type::CARD()->get_value(), 'PbP Card', 'PbP Cards' ),
+			Entity_Type::GAME()->get_value() => new Custom_Post_Type( Entity_Type::GAME()->get_value(), 'PbP Game', 'PbP Games' ),
+			Entity_Type::CHARACTER()->get_value() => new Custom_Post_Type( Entity_Type::CHARACTER()->get_value(), 'PbP Character', 'PbP Characters' ),
 		);
 
 	}
 
 	/**
 	 *
-	 * @param string $type
+	 * @param Entity_Type $type
 	 *
 	 * @return Custom_Post_Type
 	 */
 	public function get_type( $type ) {
 
-
-		return isset( $this->available_types[ $type ] )
-			? $this->available_types[ $type ]
-			: $this->available_types[ Entity_Type::UNKNOWN ];
+		try {
+		return $this->available_types[ $type->get_value() ];
+		} catch (\Exception $exception){
+			throw new \Exception("There is no CustomPostType defined for '{$type->get_value()}' entity type'", 0, $exception);
+		}
 	}
 }
 	

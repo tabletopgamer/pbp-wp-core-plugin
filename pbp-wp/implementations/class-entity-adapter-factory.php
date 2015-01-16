@@ -18,7 +18,7 @@ class Entity_Adapter_Factory implements IEntity_Adapter_Factory {
 	public function get_entity_adapter(\WP_Post $post) {
 
 		switch ($post->post_type) {
-			case Entity_Type::CARD :
+			case Entity_Type::CARD() :
 				return new Custom_Post_Entity_Adapter($post);
 		}
 
