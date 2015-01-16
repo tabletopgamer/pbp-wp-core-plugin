@@ -5,7 +5,7 @@
  *
  * @author tabletopgamer
  */
-interface Card_Interface extends Entity_Interface{
+interface ICard extends IEntity{
 	
 	/**
 	 * @return int Returns the number of cards in hand/deck

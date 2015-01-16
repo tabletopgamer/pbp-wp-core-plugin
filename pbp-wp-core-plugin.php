@@ -1,7 +1,7 @@
 <?php
 
-use PbP_WP\Implementations\PbP_WP_Post_Type_Provider;
-use PbP_WP\Implementations\PbP_WP_Custom_Post_Register;
+use PbP_WP\Implementations\Custom_Post_Type_Factory;
+use PbP_WP\Implementations\Custom_Post_Register;
 
 /**
  * Plugin Name: PlayByPost Games
@@ -28,12 +28,12 @@ class PbP_Tabletop_Core {
     private function __construct() {
         $this->file = __FILE__;
         
-		$typeProvider = new PbP_WP_Post_Type_Provider();
-		$postRegister = new PbP_WP_Custom_Post_Register();
-		
-		foreach ($typeProvider->get_available_types() as $availablePostType){
-			$postRegister->add_custom_post($availablePostType);
-		}
+		$typeProvider = new Custom_Post_Type_Factory();
+		$postRegister = new Custom_Post_Register();
+//
+//		foreach ($typeProvider->get_available_types() as $availablePostType){
+//			$postRegister->add_custom_post($availablePostType);
+//		}
 
 		$postRegister->register_all();
     }

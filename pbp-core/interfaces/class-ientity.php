@@ -5,7 +5,7 @@
  *
  * @author tabletopgamer
  */
-interface Entity_Interface {
+interface IEntity {
 	
 	/**
 	 * @return int

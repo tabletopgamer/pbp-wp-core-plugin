@@ -1,6 +1,6 @@
 <?php namespace PbP_Core\Implementations;
 
-use PbP_Core\Interfaces\Entity_Interface;
+use PbP_Core\Interfaces\IEntity;
 use PbP_Core\Interfaces\Entity_Type;
 
 /**
@@ -8,7 +8,7 @@ use PbP_Core\Interfaces\Entity_Type;
  *
  * @author tabletopgamer
  */
-class Entity_Base implements Entity_Interface {
+class Entity_Base implements IEntity {
 	private $id;
 	private $type;
 	

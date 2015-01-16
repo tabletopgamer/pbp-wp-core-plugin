@@ -1,7 +1,8 @@
 <?php 
 namespace PbP_WP\Implementations;
 
-use PbP_Core\Interfaces\Entity_Repository_Interface;
+use PbP_Core\Interfaces\IEntity_Repository;
+use PbP_WP\Interfaces\IEntity_Adapter_Factory;
 
 
 /**
@@ -10,14 +11,31 @@ use PbP_Core\Interfaces\Entity_Repository_Interface;
  * Wordpress specific implementation for an IEntityRepository
  * @see Entity_Repository_Interface
  */
-class PbP_WP_Post_Entity_Repository implements Entity_Repository_Interface{
-    
+class Custom_Post_Entity_Repository implements IEntity_Repository{
+
+    /**
+     * @var IEntity_Adapter_Factory
+     */
+    private $entityAdapterFactory;
+    /**
+     * @var
+     */
+    private $entity_adapter_factory;
+
+	/**
+     * @param IEntity_Adapter_Factory $entity_adapter_factory
+     */
+    public function __construct(IEntity_Adapter_Factory $entity_adapter_factory){
+
+        $this->entity_adapter_factory = $entity_adapter_factory;
+    }
+
     /**
      * @param array[int] $entityIds
      * @return array[IEntity] An array containing all entities for the specified ids. 
      * If no entities could be found, then an emtpy array is returned.
      */
-    public function getEntitiesById( array $entityIds ) {
+    public function getByIds( array $entityIds ) {
         
         $args = array( 'post__in' => $entityIds );
           
@@ -27,7 +45,7 @@ class PbP_WP_Post_Entity_Repository implements Entity_Repository_Interface{
         
         if ( count( $wpPosts ) > 0 ){
             foreach ( $wpPosts as $wpPost ){
-                $entities[] = new PbP_WP_Post_Entity_Adapter( $wpPost) ;
+                $entities[] = $this->entity_adapter_factory->get_entity_adapter($wpPost) ;
                
             }
         }
@@ -39,7 +57,7 @@ class PbP_WP_Post_Entity_Repository implements Entity_Repository_Interface{
      * @param int $entityId
      * @return Entity_Interface The IEntity, if there is an entity with entity_id exists, NULL otherwise
      */
-    public function getEntityById( $entityId ) {
+    public function getById( $entityId ) {
 		
 		if (!is_numeric( $entityId )){
 			throw new \InvalidArgumentException("entityId must be null");
@@ -49,7 +67,7 @@ class PbP_WP_Post_Entity_Repository implements Entity_Repository_Interface{
         $wpPost = \get_post( $entityId );
         
         if ( $wpPost !== NULL ){
-            $result = new PbP_WP_Post_Entity_Adapter( $wpPost );
+            $result = new Custom_Post_Entity_Adapter( $wpPost );
         }
         
         return $result;

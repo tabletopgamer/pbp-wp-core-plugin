@@ -2,14 +2,14 @@
 namespace PbP_WP\Implementations;
 
 use PbP_Core\Interfaces\Entity_Type;
-use PbP_Core\Interfaces\Entity_Interface;
+use PbP_Core\Interfaces\IEntity;
 
 /**
  * @package wordpress-specific
  * 
  * Adapter class for WP_Post entity class
  */
-class PbP_WP_Post_Entity_Adapter implements Entity_Interface{
+class Custom_Post_Entity_Adapter implements IEntity{
     
 	/**
 	 * @var int
@@ -29,7 +29,7 @@ class PbP_WP_Post_Entity_Adapter implements Entity_Interface{
      */
     public function __construct( \WP_Post $wpPost ) {
         if ($wpPost == NULL || !is_a($wpPost, 'WP_Post')) {
-            throw new InvalidArgumentException( 'wpPost must be a valid WP_Post' );
+            throw new \InvalidArgumentException( 'wpPost must be a valid WP_Post' );
         }
 
         if ( $wpPost != NULL ) {

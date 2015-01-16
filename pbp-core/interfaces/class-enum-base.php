@@ -16,7 +16,10 @@ abstract class Enum_Base {
 	 * @return mixed The value that is used in case the enum cannot be properly initialized
 	 */
 	abstract protected function GetDefaultValue();
-	
+
+	/**
+	 * @var sring the current value
+	 */
 	private $current_value;
 	
 	/**
@@ -30,7 +33,9 @@ abstract class Enum_Base {
 		} else {
 			$this->current_value = $this->GetDefaultValue();	
 		}
-			
-		
+	}
+
+	function get_name(){
+		return $this->current_value;
 	}
 }

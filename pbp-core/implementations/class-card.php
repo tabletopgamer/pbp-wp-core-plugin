@@ -1,13 +1,13 @@
 <?php namespace PbP_Core\Implementations;
 
-use PbP_Core\Interfaces\Card_Interface;
+use PbP_Core\Interfaces\ICard;
 
 /**
  * Description of Card
  *
  * @author tabletopgamer
  */
-class Card  extends Entity_Base implements Card_Interface{
+class Card  extends Entity_Base implements ICard{
 
 	/**
 	 * @var int

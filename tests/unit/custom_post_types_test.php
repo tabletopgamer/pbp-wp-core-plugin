@@ -1,6 +1,6 @@
 <?php
 
-use PbP_WP\Implementations\PbP_WP_Post_Type_Provider;
+use PbP_WP\Implementations\Custom_Post_Type_Factory;
 use \PbP_Core\Interfaces\Entity_Type;
 
 /**
@@ -9,15 +9,15 @@ use \PbP_Core\Interfaces\Entity_Type;
  * @author tabletopgamer
  */
 
-class PbP_WP_Post_Types_Tests extends PHPUnit_Framework_TestCase {
+class Custom_Post_Types_Tests extends PHPUnit_Framework_TestCase {
 
 	 /**
-     * @var PbP_WP_Post_Type_Provider
+     * @var Custom_Post_Type_Factory
      */
     protected $sut;
 	
 	public function setUp(){
-		$this->sut = new PbP_WP_Post_Type_Provider();
+		$this->sut = new Custom_Post_Type_Factory();
 	}
 	
 	/**

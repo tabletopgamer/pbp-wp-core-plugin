@@ -5,18 +5,18 @@
  *
  * @author tabletopgamer
  */
-interface Entity_Repository_Interface {
+interface IEntity_Repository {
     
     /**
      * @param int The unique identifier of the entity
-     * @return Entity_Interface The IEntityObject. 
+     * @return IEntity The IEntityObject.
      */
-    function getEntityById( $entityId );
+    function getById( $entityId );
     
     /**
      * @param array $entityIds An one dimesnional array containing a list of ids.
      * @return IEnity[] An array of entities. Empty array is returned in case none is found
      */
-    function getEntitiesById( array $entityIds );
+    function getByIds( array $entityIds );
     
 }

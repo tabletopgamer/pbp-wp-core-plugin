@@ -6,8 +6,9 @@ namespace PbP_WP\Interfaces;
  *
  * @author tabletopgamer
  */
-interface PbP_WP_Post_Type_Interface {
+interface ICustom_Post_Type {
     function get_singular_name();
     function get_plural_name();
     function get_post_type();
+    function get_fields();
 }
