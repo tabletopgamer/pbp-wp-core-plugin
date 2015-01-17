@@ -2,7 +2,7 @@
 
 use PbP_Core\Repository\Entity_Type;
 use PbP_WP\Custom_Post_Register;
-use PbP_WP\Implementations\Custom_Post_Factory;
+use PbP_WP\Custom_Posts\Custom_Post_Factory;
 
 /**
  * Plugin Name: PlayByPost Games

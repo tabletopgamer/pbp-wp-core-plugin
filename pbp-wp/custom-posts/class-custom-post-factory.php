@@ -1,9 +1,7 @@
 <?php
-namespace PbP_WP\Implementations;
+namespace PbP_WP\Custom_Posts;
 
 use PbP_Core\Repository\Entity_Type;
-use PbP_WP\Custom_Posts\Card_Post;
-use PbP_WP\Custom_Posts\Game_Post;
 use PbP_WP\Interfaces\ICustom_Post;
 use PbP_WP\Interfaces\ICustom_Post_Factory;
 

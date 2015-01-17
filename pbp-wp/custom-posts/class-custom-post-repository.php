@@ -5,7 +5,7 @@
  * Time: 16:37
  */
 
-namespace PbP_WP\Implementations;
+namespace PbP_WP\Custom_Posts;
 
 
 use PbP_WP\Interfaces\ICustom_Post;
