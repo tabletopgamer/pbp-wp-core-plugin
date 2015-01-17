@@ -5,12 +5,12 @@
  * Time: 05:34
  */
 
-use PbP_Core\Interfaces\Enum;
+use PbP_Core\Util\Enum;
 
 /**
- * @coversDefaultClass PbP_Core\Interfaces\Enum
+ * @coversDefaultClass PbP_Core\Util\Enum
  */
-class EnumTests extends \PHPUnit_Framework_TestCase {
+class Enum_Tests extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @var EnumA
@@ -18,6 +18,7 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 	private $sut;
 
 	public function setUp() {
+
 		// reset all properties to null values
 		EnumA::set_PROP_01( null );
 		EnumA::set_PROP_02( null );
@@ -31,7 +32,7 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @covers ::get_value
 	 */
-	public function test_Enum_CreatedThroughStaticMethod_SetsCorrectValueForThatInstance() {
+	public function getValue_CreatedThroughStaticMethod_SetsCorrectValueForThatInstance() {
 		EnumA::set_PROP_01( "iron-man" );
 
 		$result = EnumA::PROP_01()->get_value();
@@ -42,7 +43,7 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @covers ::__toString
 	 */
-	public function test_Enum_WhenConvertedToString_ReturnsThatInstanceValue() {
+	public function coString_WhenConvertedToString_ReturnsThatInstanceValue() {
 		EnumA::set_PROP_01( "life-42" );
 
 		$sut = EnumA::PROP_01();
@@ -52,8 +53,9 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @covers ::__callStatic
+	 * @expectedException InvalidArgumentException
 	 */
-	public function test_Enum_CreatedThroughStaticMethod_WithUnDefinedPropertyName_ThrowsException() {
+	public function callStatic_WithUnDefinedPropertyName_ThrowsException() {
 
 		$this->setExpectedException( 'InvalidArgumentException', 'No enum defined for' );
 
@@ -63,7 +65,28 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @covers ::__callStatic
 	 */
-	public function test_EqualityComparatorsOnSameEnum_AndSameProperty_ReturnTrue() {
+	public function callStatic_WithPublicPropertyName_ThrowsException() {
+
+		$this->setExpectedException( 'InvalidArgumentException', 'No enum defined for' );
+
+		EnumA::PUBLIC_STATIC_PROP();
+	}
+
+	/**
+	 * @covers ::__callStatic
+	 * @expectedException InvalidArgumentException
+	 */
+	public function callStatic_WithProtectedNonStaticName_ThrowsException() {
+
+		$this->setExpectedException( 'InvalidArgumentException', 'No enum defined for' );
+
+		EnumA::PROTECTED_NOT_STATIC();
+	}
+
+	/**
+	 * @covers ::__callStatic
+	 */
+	public function equalityComparators_OnSameEnum_AndSameProperty_ReturnTrue() {
 		EnumA::set_PROP_01( 'the-same' );
 
 		$this->assertTrue( EnumA::PROP_01() == EnumA::PROP_01() );
@@ -71,9 +94,10 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @test
 	 * @covers ::__callStatic
 	 */
-	public function test_EqualityComparatorsOnSameEnum_AndDifferentProperties_ReturnFalse() {
+	public function equalityComparators_OnSameEnum_AndDifferentProperties_ReturnFalse() {
 		EnumA::set_PROP_01( 'primary' );
 		EnumA::set_PROP_02( 'secondary' );
 
@@ -82,9 +106,10 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @test
 	 * @covers ::__callStatic
 	 */
-	public function test_TwoEnums_WithSamePropertyName_ButDifferentValue_AreNotEqual() {
+	public function twoEnums_WithSamePropertyNames_ButDifferentValues_AreNotEqual() {
 		EnumA::set_PROP_01( 'aquatic' );
 		EnumB::set_PROP_01( 'circus' );
 
@@ -92,9 +117,10 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @test
 	 * @covers ::__callStatic
 	 */
-	public function test_TwoEnums_WithSamePropertyName_AndSameValue_AreNotEqual() {
+	public function twoEnums_WithSamePropertyNames_AndSameValues_AreNotEqual() {
 		EnumA::set_PROP_01( 'green' );
 		EnumB::set_PROP_01( 'green' );
 
@@ -102,9 +128,10 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @test
 	 * @covers ::__callStatic
 	 */
-	public function test_TwoEnums_WithDifferentPropertyName_AndSameValue_AreNotEqual() {
+	public function twoEnums_WithDifferentPropertyNames_ButWithSameValues_AreNotEqual() {
 		EnumA::set_PROP_02( 'brown' );
 		EnumB::set_PROP_01( 'brown' );
 
@@ -112,20 +139,22 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @test
 	 * @covers ::get_value
 	 */
-	public function test_Enum_WithPropertyWithoutValue_SetsThePropertyNameAsValue() {
+	public function callStatic_WithPropertyWithoutValue_SetsThePropertyNameAsValue() {
 		$result = EnumB::PROP_WITHOUT_VALUE();
 
-		$this->assertEquals( "PROP_WITHOUT_VALUE", $result->get_value() );
+		$this->assertEquals( 'PROP_WITHOUT_VALUE', $result->get_value() );
 	}
 
 	/**
+	 * @test
 	 * @covers ::get_from_value
 	 */
-	public function test_GetFromValue_CalledWithExistingPropertyWithValue_ReturnsCorrectEnumInstance() {
+	public function getFromValue_CalledWithExistingPropertyWithValue_ReturnsCorrectEnumInstance() {
 
-		$value = "hey-joe";
+		$value = 'hey-joe';
 		EnumA::set_PROP_01( $value );
 
 		$result = EnumA::get_from_value( $value );
@@ -134,55 +163,60 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @test
 	 * @covers ::get_from_value
 	 */
-	public function test_GetFromValue_CalledWithExistingPropertyWithoutValue_ReturnsCorrectEnumInstance() {
+	public function getFromValue_CalledWithExistingPropertyWithoutValue_ReturnsCorrectEnumInstance() {
 
-		$result = EnumB::get_from_value('PROP_WITHOUT_VALUE');
+		$result = EnumB::get_from_value( 'PROP_WITHOUT_VALUE' );
 
 		$this->assertEquals( EnumB::PROP_WITHOUT_VALUE(), $result );
 	}
 
 	/**
+	 * @test
 	 * @covers ::get_from_value
 	 */
-	public function test_GetFromValue_FallbackToPropertyName_IfNoPropertyWithThatValueExists() {
-		EnumA::set_PROP_01("my_value");
+	public function getFromValue_FallbackToPropertyName_IfNoPropertyWithThatValueExists() {
+		EnumA::set_PROP_01( 'my_value' );
 
-		$result = EnumA::get_from_value("PROP_01");
+		$result = EnumA::get_from_value( "PROP_01" );
 
 		$this->assertEquals( EnumA::PROP_01(), $result );
 	}
 
 	/**
+	 * @test
 	 * @covers ::__construct
 	 * @covers ::get_enum_instance_and_cache_it
 	 */
-	public function test_ConsecutiveSettingOfSameProperty_DoesNotUpdateValues(){
-		EnumA::set_PROP_01("value 1");
+	public function callStatic_ConsecutiveSettingOfSameProperty_DoesNotUpdateValues() {
+		EnumA::set_PROP_01( 'value 1' );
 		$resultFromFirstCall = EnumA::PROP_01();
 
-		EnumA::set_PROP_01("value 2");
+		EnumA::set_PROP_01( 'value 2' );
 		$resultFromSecondCall = EnumA::PROP_01();
 
-		$this->assertEquals("value 1", $resultFromFirstCall);
-		$this->assertEquals("value 1", $resultFromSecondCall);
+		$this->assertEquals( 'value 1', $resultFromFirstCall );
+		$this->assertEquals( 'value 1', $resultFromSecondCall );
 
 	}
+
 	/**
+	 * @test
 	 * @covers ::reset_instance_cache
 	 */
-	public function test_resetInstanceCache_ClearsInstanceCache(){
-		EnumA::set_PROP_01("value 1");
+	public function resetInstanceCache_ClearsInstanceCache() {
+		EnumA::set_PROP_01( 'value 1' );
 		$resultFromFirstCall = EnumA::PROP_01();
 
 		EnumA::reset_instance_cache();
 
-		EnumA::set_PROP_01("value 2");
+		EnumA::set_PROP_01( 'value 2' );
 		$resultFromSecondCall = EnumA::PROP_01();
 
-		$this->assertEquals("value 1", $resultFromFirstCall);
-		$this->assertEquals("value 2", $resultFromSecondCall);
+		$this->assertEquals( 'value 1', $resultFromFirstCall );
+		$this->assertEquals( 'value 2', $resultFromSecondCall );
 
 	}
 }
@@ -196,9 +230,9 @@ class EnumTests extends \PHPUnit_Framework_TestCase {
  * @method static EnumA PROP_03()
  */
 class EnumA extends Enum {
-	protected static $PROP_01 = "a_test";
-	protected static $PROP_02 = "b_test";
-	protected static $PROP_03 = "a_other_test";
+	protected static $PROP_01 = 'a_test';
+	protected static $PROP_02 = 'b_test';
+	protected static $PROP_03 = 'a_other_test';
 
 	/**
 	 * @param string $PROP_01
@@ -234,8 +268,10 @@ class EnumA extends Enum {
  * @method static EnumB PROP_WITHOUT_VALUE()
  */
 class EnumB extends Enum {
-	protected static $PROP_01 = "a_other_test";
+	protected static $PROP_01 = 'a_other_test';
 	protected static $PROP_WITHOUT_VALUE;
+	public static $PUBLIC_STATIC_PROP;
+	protected $PROTECTED_NOT_STATIC;
 
 	/**
 	 * @param string $PROP_01

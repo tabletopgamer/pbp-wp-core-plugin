@@ -1,4 +1,4 @@
-<?php namespace PbP_Core\Interfaces;
+<?php namespace PbP_Core\Util;
 /**
  * Class Enum
  *
@@ -79,7 +79,7 @@ abstract class Enum {
 		$name = array_search( $value, $properties, true );
 
 		// fallback to the property name if no value was found
-		if ( $name === false ) {
+		if ( false === $name) {
 			$name = $value;
 		}
 
@@ -93,6 +93,9 @@ abstract class Enum {
 		return $this->value;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function __toString() {
 		return (string) $this->get_value();
 	}

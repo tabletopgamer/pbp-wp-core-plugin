@@ -1,7 +1,4 @@
-<?php namespace PbP_Core\Implementations;
-
-use PbP_Core\Interfaces\IEntity;
-use PbP_Core\Interfaces\Entity_Type;
+<?php namespace PbP_Core\Repository;
 
 /**
  * Description of class-entity-base
@@ -13,7 +10,7 @@ class Entity_Base implements IEntity {
 	private $type;
 	
 	/**
-	 * @param type $id
+	 * @param int $id
 	 * @param Entity_Type $type
 	 */
 	public function __construct($id, Entity_Type $type) {

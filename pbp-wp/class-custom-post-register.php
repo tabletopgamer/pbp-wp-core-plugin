@@ -1,7 +1,8 @@
 <?php
-namespace PbP_WP\Implementations;
+namespace PbP_WP;
 
-use PbP_WP\Interfaces\ICustom_Post_Type;
+use PbP_WP\Custom_Posts\Custom_Post_Base;
+use PbP_WP\Interfaces\ICustom_Post;
 
 /**
  * Description of PbpCustomPostRegister
@@ -11,7 +12,7 @@ use PbP_WP\Interfaces\ICustom_Post_Type;
 class Custom_Post_Register {
 
 	/**
-	 * @var Custom_Post_Type[]
+	 * @var Custom_Post_Base[]
 	 */
 	private $customPosts;
 
@@ -19,7 +20,7 @@ class Custom_Post_Register {
 		$this->customPosts = array();
 	}
 
-	public function add_custom_post( ICustom_Post_Type $customPost ) {
+	public function add_custom_post( ICustom_Post $customPost ) {
 		$this->customPosts[] = $customPost;
 	}
 
@@ -27,23 +28,23 @@ class Custom_Post_Register {
 
 		foreach ( $this->customPosts as $customPost ) {
 
-			$singularName = $customPost->get_singular_name();
-			$pluralName   = $customPost->get_plural_name();
-			$postType     = $customPost->get_post_type();
+			$postType     = $customPost->get_type();
+			$singularName = $postType;
+			$pluralName   = $postType . 's';
 
 			$labels = array(
-				'name'               => _x( $singularName, $postType ),
-				'singular_name'      => _x( $singularName, $postType ),
-				'add_new'            => _x( 'Add new', $postType ),
-				'add_new_item'       => _x( 'Add new ' . $singularName, $postType ),
-				'edit_item'          => _x( 'Edit ' . $singularName, $postType ),
-				'new_item'           => _x( 'New ' . $singularName, $postType ),
-				'view_item'          => _x( 'View ' . $singularName, $postType ),
-				'search_items'       => _x( 'Search ' . $pluralName, $postType ),
-				'not_found'          => _x( 'No ' . $pluralName . ' Found', $postType ),
-				'not_found_in_trash' => _x( 'No ' . $pluralName . ' found in Trash', $postType ),
-				'parent_item_colon'  => _x( $pluralName, $postType ),
-				'menu_name'          => _x( $pluralName, $postType ),
+				'name'               => $singularName,
+				'singular_name'      => $singularName,
+				'add_new'            => 'Add new',
+				'add_new_item'       => 'Add new ',
+				'edit_item'          => 'Edit ',
+				'new_item'           => 'New ',
+				'view_item'          => 'View ' . $singularName,
+				'search_items'       => 'Search ' . $pluralName,
+				'not_found'          => 'No ' . $pluralName . ' Found',
+				'not_found_in_trash' => 'No ' . $pluralName . ' found in Trash',
+				'parent_item_colon'  => $pluralName,
+				'menu_name'          => $pluralName,
 			);
 
 			$args = array(
@@ -70,13 +71,11 @@ class Custom_Post_Register {
 					'thumbnail',
 					'revisions',
 					'page-attributes',
-					'comments'
+					'comments',
 				),
 			);
 
 			register_post_type( $postType, $args );
-
-
 		}
 	}
 
@@ -84,7 +83,7 @@ class Custom_Post_Register {
 	public function register_meta_boxes() {
 
 		foreach ( $this->customPosts as $customPost ) {
-			$type = $customPost->get_post_type();
+			$type = $customPost->get_type();
 			add_meta_box( 'pbp_meta_' . $type, 'Meta Box Title', array(
 				$this,
 				'prfx_meta_callback'
@@ -96,6 +95,7 @@ class Custom_Post_Register {
 		$type = $post->post_type;
 
 		echo 'This is a meta box for: ' . $type;
+
 		wp_nonce_field( basename( __FILE__ ), 'prfx_nonce' );
 		$prfx_stored_meta = get_post_meta( $post->ID );
 		?>
@@ -111,31 +111,31 @@ class Custom_Post_Register {
 	<?php
 	}
 
-
-	function prfx_meta_save( $post_id ) {
-
-		// Checks save status
-		$is_autosave    = wp_is_post_autosave( $post_id );
-		$is_revision    = wp_is_post_revision( $post_id );
-		$is_valid_nonce = ( isset( $_POST['prfx_nonce'] ) && wp_verify_nonce( $_POST['prfx_nonce'], basename( __FILE__ ) ) ) ? 'true' : 'false';
-
-		// Exits script depending on save status
-		if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
-			return;
-		}
-
-		// Checks for input and sanitizes/saves if needed
-		if ( isset( $_POST['meta-text'] ) ) {
-			update_post_meta( $post_id, 'meta-text', sanitize_text_field( $_POST['meta-text'] ) );
-		}
-
-	}
+//
+//	function prfx_meta_save( $post_id ) {
+//
+//		// Checks save status
+//		$is_autosave    = wp_is_post_autosave( $post_id );
+//		$is_revision    = wp_is_post_revision( $post_id );
+//		$is_valid_nonce = ( isset( $_POST['prfx_nonce'] ) && wp_verify_nonce( $_POST['prfx_nonce'], basename( __FILE__ ) ) ) ? 'true' : 'false';
+//
+//		// Exits script depending on save status
+//		if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
+//			return;
+//		}
+//
+//		// Checks for input and sanitizes/saves if needed
+//		if ( isset( $_POST['meta-text'] ) ) {
+//			update_post_meta( $post_id, 'meta-text', sanitize_text_field( $_POST['meta-text'] ) );
+//		}
+//
+//	}
 
 	public function register_all() {
 		$actions = array(
 			'init'           => 'register_custom_posts',
 			'add_meta_boxes' => 'register_meta_boxes',
-			'save_post'      => 'prfx_meta_save'
+		//	'save_post'      => 'prfx_meta_save'
 		);
 
 		foreach ( $actions as $event => $callback ) {

@@ -1,5 +1,5 @@
 <?php
-namespace PbP_Cards;
+namespace PbP_WP\Custom_Posts;
 
 class PbP_Card_Shortcode {
 

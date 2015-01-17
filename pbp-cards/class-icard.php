@@ -1,11 +1,11 @@
-<?php namespace PbP_Core\Interfaces;
+<?php namespace PbP_Core\Repository;
 
 /**
  * A interface describing a generic entity used in the plugins
  *
  * @author tabletopgamer
  */
-interface Card_Interface extends Entity_Interface{
+interface ICard extends IEntity{
 	
 	/**
 	 * @return int Returns the number of cards in hand/deck

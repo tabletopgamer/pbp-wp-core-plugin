@@ -1,10 +1,11 @@
-<?php namespace PbP_Core\Interfaces;
+<?php namespace PbP_Core\Repository;
 
 /**
  * A interface describing a generic entity used in the plugins
  *
  * @author tabletopgamer
  */
+
 interface IEntity {
 	
 	/**

@@ -1,4 +1,6 @@
-<?php namespace PbP_Core\Interfaces;
+<?php namespace PbP_Core\Repository;
+
+use PbP_Core\Util\Enum;
 
 /**
  * A interface describing a generic entity used in the plugins
@@ -11,8 +13,8 @@
  * @method static Enum UNKNOWN()
  */
 class Entity_Type extends Enum {
-	protected static $CARD = 'tabletop_card';
-	protected static $GAME = 'tabletop_game';
-	protected static $CHARACTER = 'tabletop_character';
-	protected static $UNKNOWN = 'undefined';
+	protected static $CARD = 'card';
+	protected static $GAME = 'game';
+	protected static $CHARACTER = 'character';
+	protected static $UNKNOWN = 'unknown';
 }

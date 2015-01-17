@@ -1,4 +1,4 @@
-<?php namespace PbP_Core\Interfaces;
+<?php namespace PbP_Core\Repository;
 
 /**
  * Interface describing behavior for a generig Entity Repository
@@ -11,12 +11,12 @@ interface IEntity_Repository {
      * @param int The unique identifier of the entity
      * @return IEntity The IEntityObject.
      */
-    function getById( $entityId );
+    function get_by_id( $entityId );
     
     /**
      * @param array $entityIds An one dimesnional array containing a list of ids.
      * @return IEnity[] An array of entities. Empty array is returned in case none is found
      */
-    function getByIds( array $entityIds );
+    function get_by_ids( array $entityIds );
     
 }
