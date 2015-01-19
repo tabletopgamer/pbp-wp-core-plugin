@@ -12,11 +12,6 @@ use PbP_Core\Util\Enum;
  */
 class Enum_Tests extends \PHPUnit_Framework_TestCase {
 
-	/**
-	 * @var EnumA
-	 */
-	private $sut;
-
 	public function setUp() {
 
 		// reset all properties to null values

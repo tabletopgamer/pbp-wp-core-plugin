@@ -8,7 +8,7 @@
 namespace PbP_WP\Custom_Posts;
 
 /**
- * Class Custom_Post_Field
+ * Class Custom_Field
  * @package PbP_WP
  *
  * @method static SHORT_TEXT()
@@ -16,24 +16,18 @@ namespace PbP_WP\Custom_Posts;
  * @method static NUMBER()
  * @method static IMAGE()
  */
-class Custom_Post_Field {
+class Custom_Field {
 
 	/**
 	 * @var string
 	 */
 	private $name;
 	/**
-	 * @var mixed
-	 */
-	private $value;
-	/**
-	 * @var Custom_Post_Field_Type
+	 * @var Input_Type
 	 */
 	private $type;
 
-
-
-	public function __construct( $name, Custom_Post_Field_Type $type ) {
+	public function __construct( $name, Input_Type $type ) {
 		$this->name = $name;
 		$this->type = $type;
 	}
@@ -53,30 +47,16 @@ class Custom_Post_Field {
 	}
 
 	/**
-	 * @return Custom_Post_Field_Type
+	 * @return Input_Type
 	 */
 	public function get_type() {
 		return $this->type;
 	}
 
 	/**
-	 * @param Custom_Post_Field_Type $type
+	 * @param Input_Type $type
 	 */
 	public function set_type( $type ) {
 		$this->type = $type;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function get_value() {
-		return $this->value;
-	}
-
-	/**
-	 * @param mixed $value
-	 */
-	public function set_value( $value ) {
-		$this->value = $value;
 	}
 }

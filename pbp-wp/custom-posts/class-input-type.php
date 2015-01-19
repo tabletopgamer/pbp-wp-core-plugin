@@ -11,7 +11,7 @@ namespace PbP_WP\Custom_Posts;
 use PbP_Core\Util\Enum;
 
 /**
- * Class Custom_Post_Field_Types
+ * Class Input_Type
  * @package PbP_WP
  *
  * @method static SHORT_TEXT()
@@ -19,7 +19,7 @@ use PbP_Core\Util\Enum;
  * @method static NUMBER()
  * @method static IMAGE()
  */
-class Custom_Post_Field_Type extends Enum {
+class Input_Type extends Enum {
 	protected static $SHORT_TEXT;
 	protected static $LONG_TEXT;
 	protected static $NUMBER;

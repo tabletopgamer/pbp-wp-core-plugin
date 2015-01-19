@@ -1,76 +1,81 @@
 <?php
 /**
  * User: tabletopgamer
- * Date: 17.01.2015
- * Time: 16:37
+ * Date: 19.01.2015
+ * Time: 18:11
  */
 
 namespace PbP_WP\Custom_Posts;
 
 
-use PbP_WP\Interfaces\ICustom_Post;
+use PbP_WP\Custom_Posts\Types\ICustom_Post_Type_Factory;
+use PbP_WP\WordPress_Posts\IWordPress_Post_Repository;
 
-class Custom_Post_Repository {
+class Custom_Post_Repository implements ICustom_Post_Repository {
+	/**
+	 * @var IWordPress_Post_Repository
+	 */
+	private $post_repository;
+	/**
+	 * @var ICustom_Fields_Repository
+	 */
+	private $fields_repository;
+	/**
+	 * @var ICustom_Post_Type_Factory
+	 */
+	private $post_type_factory;
 
 	/**
-	 * @param array [int] $entityIds
-	 *
-	 * @return ICustom_Post[] An array containing all entities for the specified ids.
-	 * If no entities could be found, then an emtpy array is returned.
+	 * @param IWordPress_Post_Repository $post_repository
+	 * @param ICustom_Fields_Repository $fields_repository
+	 * @param ICustom_Post_Type_Factory $post_type_factory
 	 */
-	public function get_by_ids( array $postIds ) {
+	function __construct(
+		IWordPress_Post_Repository $post_repository, ICustom_Fields_Repository $fields_repository,
+		ICustom_Post_Type_Factory $post_type_factory
+	) {
 
-		$args = array( 'post__in' => $postIds );
-
-		$wpPosts = \get_posts( $args );
-
-		$entities = array();
-
-		if ( count( $wpPosts ) > 0 ) {
-			foreach ( $wpPosts as $wpPost ) {
-				$entities[] = $this->post_type_factory->create_post( $wpPost );
-
-			}
-		}
-
-		return $entities;
+		$this->post_repository   = $post_repository;
+		$this->fields_repository = $fields_repository;
+		$this->post_type_factory = $post_type_factory;
 	}
 
 	/**
-	 * @param int $entityId
-	 *
-	 * @return ICustom_Post
-	 */
-	public function get_by_id( $entityId ) {
-
-		if ( ! is_numeric( $entityId ) ) {
-			throw new \InvalidArgumentException( 'EntityId must not be null' );
-		}
-
-		$result = null;
-		$wpPost = \get_post( $entityId );
-
-		if ( $wpPost !== null ) {
-			$result = $this->create_custom_post( $wpPost );
-			$result->set_id( $wpPost->ID );
-		}
-
-		return $result;
-	}
-
-	/**
-	 * @param \WP_Post $wpPost
+	 * @param $id
 	 *
 	 * @return ICustom_Post
 	 */
-	private function create_custom_post( $wpPost ) {
-		$custom_post = $this->post_type_factory->create_post( $wpPost );
+	function get_by_id( $id ) {
+		$post = $this->post_repository->get_by_id( $id );
 
-		$post_meta = \get_post_custom( $wpPost->ID );
-		foreach ($post_meta as $meta){
-		//	$custom_post->set_fields()
-		}
+		$custom_type = $this->post_type_factory->get_post_type($post->get_type());
 
-		return $custom_post;
+		$fields = $this->fields_repository->get_custom_fields( $id,
+			$this->get_field_names( $custom_type ) );
+
+		return new Custom_Post($post, $fields);
 	}
+
+	/**
+	 * @param array int[] $entityIds
+	 *
+	 * @return ICustom_Post[]
+	 */
+	public function get_by_ids( array $post_ids ) {
+		// TODO: Implement get_by_ids() method.
+	}
+
+	/**
+	 * @param ICustom_Post_Type $custom_type
+	 *
+	 * @return array
+	 */
+	private function get_field_names( $custom_type ) {
+
+		return array_map( function ( Custom_Field $type ) {
+			return $type->get_name();
+		}, $custom_type->get_post_fields() );
+	}
+
+
 }

@@ -2,7 +2,7 @@
 
 use PbP_Core\Repository\Entity_Type;
 use PbP_WP\Custom_Post_Register;
-use PbP_WP\Custom_Posts\Custom_Post_Factory;
+use PbP_WP\Custom_Posts\Types\Custom_Post_Type_Factory;
 
 /**
  * Plugin Name: PlayByPost Games
@@ -28,11 +28,14 @@ class PbP_Tabletop_Core {
 	private function __construct() {
 		$this->file = __FILE__;
 
-		$postFactory = new Custom_Post_Factory();
+		$postFactory = new Custom_Post_Type_Factory([
+			new \PbP_WP\Custom_Posts\Types\Game_Post_Type(),
+			new \PbP_WP\Custom_Posts\Types\Card_Post_Type(),
+		]);
 
 		$postRegister = new Custom_Post_Register();
-		$postRegister->add_custom_post( $postFactory->create_post_from_entity_type( Entity_Type::GAME() ) );
-		$postRegister->add_custom_post( $postFactory->create_post_from_entity_type( Entity_Type::CARD() ) );
+		$postRegister->add_custom_post( new \PbP_WP\Custom_Posts\Types\Game_Post_Type() );
+		$postRegister->add_custom_post( new \PbP_WP\Custom_Posts\Types\Game_Post_Type() );
 
 		$postRegister->register_all();
 	}

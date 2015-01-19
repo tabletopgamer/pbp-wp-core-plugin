@@ -7,9 +7,6 @@
 
 namespace PbP_WP\WordPress_Posts;
 
-use PbP_WP\Interfaces\IWordPress_Post;
-use PbP_WP\Interfaces\IWordPress_Post_Adapter_Factory;
-
 class WPPost_To_WordPress_Post_Adapter_Factory implements IWordPress_Post_Adapter_Factory {
 
 

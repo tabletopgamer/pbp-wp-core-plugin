@@ -1,8 +1,8 @@
 <?php
 namespace PbP_WP;
 
-use PbP_WP\Custom_Posts\Custom_Post_Base;
-use PbP_WP\Interfaces\ICustom_Post;
+use PbP_WP\Custom_Posts\ICustom_Post_Type;
+use PbP_WP\Custom_Posts\Types\Custom_Post_Type_Base;
 
 /**
  * Description of PbpCustomPostRegister
@@ -12,7 +12,7 @@ use PbP_WP\Interfaces\ICustom_Post;
 class Custom_Post_Register {
 
 	/**
-	 * @var Custom_Post_Base[]
+	 * @var \PbP_WP\Custom_Posts\ICustom_Post_Type[]
 	 */
 	private $customPosts;
 
@@ -20,7 +20,7 @@ class Custom_Post_Register {
 		$this->customPosts = array();
 	}
 
-	public function add_custom_post( ICustom_Post $customPost ) {
+	public function add_custom_post( ICustom_Post_Type $customPost ) {
 		$this->customPosts[] = $customPost;
 	}
 
@@ -28,7 +28,7 @@ class Custom_Post_Register {
 
 		foreach ( $this->customPosts as $customPost ) {
 
-			$postType     = $customPost->get_type();
+			$postType     = $customPost->get_type_name();
 			$singularName = $postType;
 			$pluralName   = $postType . 's';
 
@@ -135,7 +135,7 @@ class Custom_Post_Register {
 		$actions = array(
 			'init'           => 'register_custom_posts',
 			'add_meta_boxes' => 'register_meta_boxes',
-		//	'save_post'      => 'prfx_meta_save'
+			//	'save_post'      => 'prfx_meta_save'
 		);
 
 		foreach ( $actions as $event => $callback ) {

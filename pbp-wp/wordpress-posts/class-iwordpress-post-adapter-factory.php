@@ -4,7 +4,7 @@
  * Date: 17.01.2015
  * Time: 16:49
  */
-namespace PbP_WP\Interfaces;
+namespace PbP_WP\WordPress_Posts;
 
 interface IWordPress_Post_Adapter_Factory {
 	/**

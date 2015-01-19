@@ -24,8 +24,8 @@ class WordPress_Post_Repository_Tests extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::get_by_id
 	 * @test
-	 * @covers WpPostEntityRepository::getById
 	 */
 	public function get_by_id_WithExistingPostId_ReturnsThatPost() {
 		$post_id = $this->factory->post->create();
@@ -85,4 +85,5 @@ class WordPress_Post_Repository_Tests extends WP_UnitTestCase {
 
 		$this->assertEquals( 0, count( $results ) );
 	}
+
 }

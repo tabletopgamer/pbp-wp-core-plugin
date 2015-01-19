@@ -8,10 +8,7 @@
 namespace PbP_WP\WordPress_Posts;
 
 
-use PbP_WP\Interfaces\IWordPress_Post;
-use PbP_WP\Interfaces\IWordPress_Post_Adapter_Factory;
-
-class WordPress_Post_Repository {
+class WordPress_Post_Repository implements IWordPress_Post_Repository {
 	/**
 	 * @var IWordPress_Post_Adapter_Factory
 	 */
@@ -46,33 +43,33 @@ class WordPress_Post_Repository {
 	}
 
 	/**
-	 * @param int $entityId
+	 * @param int $post_id
 	 *
 	 * @return IWordPress_Post
 	 */
-	public function get_by_id( $entityId ) {
+	public function get_by_id( $post_id ) {
 
-		if ( ! is_numeric( $entityId ) ) {
-			throw new \InvalidArgumentException( 'EntityId must not be null' );
+		if ( ! is_numeric( $post_id ) ) {
+			throw new \InvalidArgumentException( "Argument 'post_id' must be a number. '$post_id' value not valid." );
 		}
 
-		$result = null;
-		$wpPost = \get_post( $entityId );
+		$result  = null;
+		$wp_post = \get_post( $post_id );
 
-		if ( $wpPost !== null ) {
-			$result = $this->get_post( $wpPost );
+		if ( $wp_post !== null ) {
+			$result = $this->get_post( $wp_post );
 		}
 
 		return $result;
 	}
 
 	/**
-	 * @param \WP_Post $wpPost
+	 * @param \WP_Post $wp_post
 	 *
 	 * @return IWordPress_Post
 	 */
-	private function get_post( $wpPost ) {
+	private function get_post( $wp_post ) {
 
-		return $this->adapter_factory->create_adapter( $wpPost );;
+		return $this->adapter_factory->create_adapter( $wp_post );;
 	}
 }

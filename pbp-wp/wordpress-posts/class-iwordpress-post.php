@@ -1,5 +1,5 @@
 <?php
-namespace PbP_WP\Interfaces;
+namespace PbP_WP\WordPress_Posts;
 
 /**
  * Description of class-custom-post-interface
@@ -16,4 +16,14 @@ interface IWordPress_Post {
      * @return string
      */
     function get_type();
+
+    /**
+     * @return string
+     */
+    function get_title();
+
+    /**
+     * @return string
+     */
+    function get_content();
 }

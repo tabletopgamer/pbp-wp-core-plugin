@@ -8,8 +8,6 @@
 namespace PbP_WP\WordPress_Posts;
 
 
-use PbP_WP\Interfaces\IWordPress_Post;
-
 class WPPost_To_WordPress_Post_Adapter implements IWordPress_Post{
 	/**
 	 * @var \WP_Post
@@ -24,7 +22,6 @@ class WPPost_To_WordPress_Post_Adapter implements IWordPress_Post{
 		$this->post = $post;
 	}
 
-
 	/**
 	 * @return int
 	 */
@@ -37,5 +34,19 @@ class WPPost_To_WordPress_Post_Adapter implements IWordPress_Post{
 	 */
 	function get_type() {
 		return $this->post->post_type;
+	}
+
+	/**
+	 * @return string
+	 */
+	function get_title() {
+		return $this->post->post_title;
+	}
+
+	/**
+	 * @return string
+	 */
+	function get_content() {
+		return $this->post->post_content;
 	}
 }
