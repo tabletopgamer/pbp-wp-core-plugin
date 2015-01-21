@@ -34,10 +34,9 @@ class Custom_Post_Type_Factory_Tests extends \PHPUnit_Framework_TestCase {
 		                  ->getMock();
 
 		$knownType->method( 'get_type_name' )
-		          ->will( 'known_type' );
+		          ->willReturn( 'known_type' );
 
 		$sut = $this->get_sut( [ $knownType ] );
-		//$this->setExpectedException( 'Exception', 'no Custom_Post_Type defined' );
 
 		$result = $sut->get_post_type( 'known_type' );
 

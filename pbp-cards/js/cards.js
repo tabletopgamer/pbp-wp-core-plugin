@@ -1,9 +1,10 @@
 jQuery(function(){
     jQuery('.pbp-card-handle').on('mouseenter', function(){
         var container = jQuery(this);
+        var id = container.attr('id');
         var card = jQuery("#div-" +id);
         
-        var id = container.attr('id');
+
         card.show();
         
         card.position();

@@ -1,7 +1,7 @@
 <?php
 
 use PbP_Core\Repository\Entity_Type;
-use PbP_WP\Custom_Post_Register;
+use PbP_WP\PbP_Plugin_Loader;
 use PbP_WP\Custom_Posts\Types\Custom_Post_Type_Factory;
 
 /**
@@ -28,16 +28,10 @@ class PbP_Tabletop_Core {
 	private function __construct() {
 		$this->file = __FILE__;
 
-		$postFactory = new Custom_Post_Type_Factory([
-			new \PbP_WP\Custom_Posts\Types\Game_Post_Type(),
-			new \PbP_WP\Custom_Posts\Types\Card_Post_Type(),
-		]);
+		$plugin_loader = new PbP_Plugin_Loader();
+		$plugin_loader->add_plugin( new \PbP_Cards\PbP_Card_Shortcode() );
 
-		$postRegister = new Custom_Post_Register();
-		$postRegister->add_custom_post( new \PbP_WP\Custom_Posts\Types\Game_Post_Type() );
-		$postRegister->add_custom_post( new \PbP_WP\Custom_Posts\Types\Game_Post_Type() );
-
-		$postRegister->register_all();
+		$plugin_loader->load_all();
 	}
 
 }
