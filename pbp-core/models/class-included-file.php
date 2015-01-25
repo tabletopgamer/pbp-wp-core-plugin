@@ -5,7 +5,7 @@
  * Time: 22:15
  */
 
-namespace PbP_Core;
+namespace PbP_Core\Models;
 
 
 class Included_File {

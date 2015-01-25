@@ -8,6 +8,7 @@
 namespace PbP_Core;
 
 
+use PbP_Core\Models\Included_File;
 use PbP_WP\Custom_Posts\ICustom_Post_Type;
 
 interface IPbP_Plugin {
