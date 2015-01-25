@@ -51,7 +51,7 @@ class Event_Engine implements IEvent_Engine {
 			}
 
 			foreach ( $this->events[ $event_name ] as $callback ) {
-				$callback( $event_name, $event_args );
+				$callback( $event_args );
 			}
 		}
 	}
