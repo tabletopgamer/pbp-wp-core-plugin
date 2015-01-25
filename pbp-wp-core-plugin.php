@@ -1,6 +1,6 @@
 <?php
 
-use PbP_Core\Templates\Custom_Template_Engine;
+use PbP_Core\Templates\Thp_Template_Engine;
 use PbP_WP\PbP_Plugin_Loader;
 
 /**
@@ -28,7 +28,7 @@ class PbP_Tabletop_Core {
 		$this->file = __FILE__;
 
 		$file_repository   = new \PbP_Core\Repository\File_Repository( PBP_PLUGIN_BASE_PATH );
-		$template_engine = new Custom_Template_Engine( $file_repository );
+		$template_engine = new Thp_Template_Engine( $file_repository );
 
 		$plugin_loader = new PbP_Plugin_Loader();
 

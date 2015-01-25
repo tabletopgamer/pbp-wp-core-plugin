@@ -9,10 +9,10 @@ namespace PbP_Core\Templates;
 interface ITemplate_Engine {
 
 	/**
-	 * @param string $template_path The relative path to the template file
+	 * @param string $template The relative path to the template file
 	 * @param array $model The model for populating template variables.
 	 *
 	 * @return mixed
 	 */
-	public function render( $template_path, $model );
+	public function render( $template, $model );
 }
