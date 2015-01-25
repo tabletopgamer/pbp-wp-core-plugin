@@ -1,8 +1,7 @@
 <?php
 
-use PbP_Core\Repository\Entity_Type;
+use PbP_Core\Templates\Custom_Template_Engine;
 use PbP_WP\PbP_Plugin_Loader;
-use PbP_WP\Custom_Posts\Types\Custom_Post_Type_Factory;
 
 /**
  * Plugin Name: PlayByPost Games
@@ -28,8 +27,12 @@ class PbP_Tabletop_Core {
 	private function __construct() {
 		$this->file = __FILE__;
 
+		$file_repository   = new \PbP_Core\Repository\File_Repository( PBP_PLUGIN_BASE_PATH );
+		$template_engine = new Custom_Template_Engine( $file_repository );
+
 		$plugin_loader = new PbP_Plugin_Loader();
-		$plugin_loader->add_plugin( new \PbP_Cards\PbP_Card_Shortcode() );
+
+		$plugin_loader->add_plugin( new \PbP_Cards\PbP_Card_Shortcode( $template_engine ) );
 
 		$plugin_loader->load_all();
 	}
@@ -57,7 +60,6 @@ spl_autoload_register( function ( $path_to_include ) {
 		if ( ! file_exists( $path_to_include ) ) {
 			return false;
 		}
-
 		require_once $path_to_include;
 
 		return true;

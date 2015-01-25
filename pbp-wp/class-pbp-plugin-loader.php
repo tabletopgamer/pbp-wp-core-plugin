@@ -40,7 +40,6 @@ class PbP_Plugin_Loader implements IPbP_Plugin_Loader {
 		foreach ( $actions as $event => $callback ) {
 			add_action( $event, array( $this, $callback ) );
 		}
-
 	}
 
 	public function on_register_custom_posts() {

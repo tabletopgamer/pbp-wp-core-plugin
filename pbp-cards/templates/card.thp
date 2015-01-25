@@ -1,0 +1,10 @@
+<? if ( $model['has_content'] ) { ?>
+
+<span class='pbp-container'>
+        <span id="<?#id?>" title="<?#content?>" class='pbp-card-handle'><?#content?></span>
+        <div id="div-<?#id?>" class='pbp-card--hidden'><p><?#attr?></p><?#text?></div>
+    </span>
+<? } else { ?>
+<div id="div-<?#id?>" class="pbp-card"><p><?#attr?></p><?#text?></div></span>
+<? } ?>
+
