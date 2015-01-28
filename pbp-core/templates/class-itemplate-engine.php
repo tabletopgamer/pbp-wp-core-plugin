@@ -14,5 +14,5 @@ interface ITemplate_Engine {
 	 *
 	 * @return mixed
 	 */
-	public function render( $template, $model );
+	public function render( $template, array $model );
 }

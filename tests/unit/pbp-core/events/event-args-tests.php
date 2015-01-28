@@ -1,10 +1,4 @@
 <?php
-/**
- * User: tabletopgamer
- * Date: 25.01.2015
- * Time: 11:10
- */
-
 use PbP_Core\Events\Event_Args;
 
 /**
@@ -13,7 +7,7 @@ use PbP_Core\Events\Event_Args;
 class Event_Args_Tests extends PHPUnit_Framework_TestCase {
 
 	/**
-	 * @covers ::NULL_OBJECT
+	 * @covers ::EMPTY_OBJECT
 	 * @test
 	 */
 	public function EMPTY_OBJECT_CalledTwice_WillReturnSameInstance() {
@@ -25,7 +19,7 @@ class Event_Args_Tests extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers ::NULL_OBJECT
+	 * @covers ::EMPTY_OBJECT
 	 * @test
 	 */
 	public function EMPTY_OBJECT_ReturnsEmptyEventArgsObject() {

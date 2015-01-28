@@ -37,7 +37,7 @@ abstract class Template_Engine implements ITemplate_Engine {
 	 *
 	 * @return string
 	 */
-	public final function render( $template, $model ) {
+	public final function render( $template, array $model ) {
 
 		$this->sanitize_model( $model );
 
