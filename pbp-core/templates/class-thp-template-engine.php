@@ -6,6 +6,7 @@
 namespace PbP_Core\Templates;
 
 use PbP_Core\Repository\IContent_Repository;
+use PbP_Core\Templates\Sanitizers\IModel_Sanitizer;
 
 /**
  * Thp_Template_Engine is a custom templating engine, used for rendering .thp templates.
@@ -30,10 +31,11 @@ class Thp_Template_Engine extends Template_Engine {
 
 	/**
 	 * @param IContent_Repository $template_repository
-	 *
-	 * @param string $base_path
+	 * @param IModel_Sanitizer $sanitizer
 	 */
-	public function __construct( IContent_Repository $template_repository ) {
+	public function __construct( IContent_Repository $template_repository, IModel_Sanitizer $sanitizer ) {
+		parent::__construct($sanitizer);
+
 		$this->template_repository = $template_repository;
 	}
 

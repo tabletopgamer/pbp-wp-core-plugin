@@ -1,5 +1,6 @@
 <?php
 use PbP_Core\Repository\IContent_Repository;
+use PbP_Core\Templates\Sanitizers\Simple_Model_Sanitizer;
 use PbP_Core\Templates\Thp_Template_Engine;
 
 /**
@@ -20,14 +21,15 @@ class ThP_Template_Engine_Tests extends PHPUnit_Framework_TestCase {
 		$this->contentRepo = $this->getMockBuilder( 'PbP_Core\Repository\IContent_Repository' )
 		                          ->getMock();
 
-		$this->sut = new Thp_Template_Engine( $this->contentRepo );
+		$sanitizer = new Simple_Model_Sanitizer();
+		$this->sut = new Thp_Template_Engine( $this->contentRepo, $sanitizer);
 	}
 
 	/**
-	 * @covers ::EMPTY_OBJECT
+	 * @covers ::render
 	 * @test
 	 */
-	public function EMPTY_OBJECT_CalledTwice_WillReturnSameInstance() {
+	public function render_CalledTwice_WillReturnSameInstance() {
 		$this->contentRepo->method( 'get_content' )
 		                  ->willReturn( 'cool_string' );
 

@@ -1,5 +1,6 @@
 <?php
 use PbP_Core\Repository\IContent_Repository;
+use PbP_Core\Templates\Sanitizers\Simple_Model_Sanitizer;
 use PbP_Core\Templates\Template_Engine;
 
 /**
@@ -17,14 +18,22 @@ class Template_Engine_Tests extends PHPUnit_Framework_TestCase {
 	private $sut;
 
 	public function setUp() {
-		$this->contentRepo = $this->getMockBuilder( 'PbP_Core\Repository\IContent_Repository' )
-		                          ->getMock();
+		$sanitizer = new Simple_Model_Sanitizer();
 
-		$this->contentRepo->method( 'get_content' )
-		                  ->willReturn( 'content' );
+		$this->sut = new Template_Engine_Impl_Test( $sanitizer );
 
-		$this->sut = new Template_Engine_Impl_Test( $this->contentRepo );
+	}
 
+	/**
+	 * @covers ::render
+	 * @test
+	 */
+	public function render_CalledOnce() {
+		$template = 'the/template/path';
+
+		$this->sut->render( $template, [ 'a' => 'b' ] );
+
+		$this->assertEquals( 1, $this->sut->get_load_template_count() );
 	}
 
 	/**

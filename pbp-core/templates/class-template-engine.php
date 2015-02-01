@@ -8,12 +8,23 @@
 namespace PbP_Core\Templates;
 
 
+use PbP_Core\Templates\Sanitizers\IModel_Sanitizer;
+
 abstract class Template_Engine implements ITemplate_Engine {
 
 	/**
 	 * @var array
 	 */
 	protected $template_files = array();
+	/**
+	 * @var IModel_Sanitizer
+	 */
+	private $sanitizer;
+
+
+	public function __construct(IModel_Sanitizer $sanitizer){
+		$this->sanitizer = $sanitizer;
+	}
 
 	/**
 	 * @param $content string The template body. It should always be string.
@@ -39,18 +50,12 @@ abstract class Template_Engine implements ITemplate_Engine {
 	 */
 	public final function render( $template, array $model ) {
 
-		$this->sanitize_model( $model );
+		$model = $this->sanitizer->sanitize( $model );
 
 		$template = $this->get_template( $template );
 
 		return $this->evaluate_content( $template, $model );
 
-	}
-
-	protected function sanitize_model( $model ) {
-		array_walk_recursive( $model, function ( &$item, $key ) {
-			$item = htmlspecialchars( $item, ENT_QUOTES );
-		} );
 	}
 
 	protected function get_template( $template_path ) {
