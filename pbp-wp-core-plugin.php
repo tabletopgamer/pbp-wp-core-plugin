@@ -1,7 +1,9 @@
 <?php
 
 use PbP_Cards\PbP_Card_Shortcode;
+use PbP_Game\PbP_Base_Game;
 use PbP_WP\PbP_Plugin_Loader;
+
 /**
  * Plugin Name: PlayByPost Games
  * Plugin URI: https://github.com/tabletopgamer/pbp-wp-core-plugin
@@ -12,10 +14,10 @@ use PbP_WP\PbP_Plugin_Loader;
  * Author URI: https://github.com/tabletopgamer
  * */
 
-include('class-di-handler.php');    //TODO: take this out
 define( 'PBP_CORE_PREFIX', 'PbP_' );
 define( 'PBP_PLUGIN_BASE_PATH', dirname( __FILE__ ) );
 
+include( 'class-di-handler.php' );    //TODO: take this out
 
 spl_autoload_register( function ( $path_to_include ) {
 
@@ -60,10 +62,10 @@ class PbP_Tabletop_Core {
 		$plugin_loader = new PbP_Plugin_Loader();
 
 		$plugin_loader->add_plugin( new PbP_Card_Shortcode( $di->resolve( 'PbP_Core\Templates\ITemplate_Engine' ) ) );
+		$plugin_loader->add_plugin( new PbP_Base_Game());
 
 		$plugin_loader->load_all();
 	}
-
 
 }
 
